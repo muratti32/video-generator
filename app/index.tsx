@@ -6,7 +6,7 @@ const Main = () => {
   return (
     <View className="flex-1 items-center justify-center bg-white" >
       <Text className="text-4xl font-pextrabold" >Main</Text>
-      <Link href='/profile'>Profile</Link>
+      <Link href='(tabs)/home'>Home</Link>
     </View>
   )
 }
