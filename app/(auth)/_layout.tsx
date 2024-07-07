@@ -1,11 +1,9 @@
-import React from 'react'
-
-type Props = {}
+import React from 'react';
+import { Text } from 'react-native';
+type Props = {};
 
 const AuthLayout = (props: Props) => {
-  return (
-    <div>AuthLayout</div>
-  )
-}
+  return <Text>AuthLayout</Text>;
+};
 
-export default AuthLayout
+export default AuthLayout;
