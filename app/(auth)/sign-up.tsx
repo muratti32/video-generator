@@ -4,7 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '@/constants/images';
 import { FormField } from '@/components/form-field';
 import { CustomButton } from '@/components/custom-button';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
+import { createAccount } from '@/lib/appWrite';
 type Props = {};
 
 const SignUp = (props: Props) => {
@@ -15,7 +16,30 @@ const SignUp = (props: Props) => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const submit = () => {};
+
+  const submit = async () => {
+    if (!form.username || !form.email || !form.password) {
+      alert('Please fill all fields');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const result = await createAccount(
+        form.email,
+        form.password,
+        form.username,
+      );
+      console.log(`halo result:`, result);
+      setIsSubmitting(false);
+      router.replace('/home');
+    } catch (error: any) {
+      setIsSubmitting(false);
+      alert(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>

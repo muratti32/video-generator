@@ -5,8 +5,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '@/constants/images';
 import { CustomButton } from '@/components/custom-button';
 import { StatusBar } from 'expo-status-bar';
+import { useGlobalContext } from '@/context/global-provider';
 
 const Main = () => {
+  const { isLoading, isLoggedIn } = useGlobalContext();
+  if (!isLoading && isLoggedIn) router.replace('/home');
   return (
     <SafeAreaView className=" bg-primary h-full">
       <StatusBar style="light" backgroundColor="#161622" />
