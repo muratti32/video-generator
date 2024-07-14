@@ -10,6 +10,16 @@ export const appWriteConfig = {
     storageId: '668a952c002c27c65fb6'
 }
 
+const {
+    endpoint,
+    platform,
+    projectId,
+    databaseId,
+    userCollectionId,
+    videoCollectionId,
+    storageId
+} = appWriteConfig;
+
 const client = new Client();
 const avatars = new Avatars(client);
 client
@@ -79,5 +89,19 @@ export const getCurrentUser = async () => {
         console.log(`halo get current user error:`, error);
         throw new Error(error);
 
+    }
+}
+
+export const getAllPosts = async () => {
+    try {
+        const posts = await databases.listDocuments(
+            databaseId,
+            videoCollectionId
+        )
+        if (!posts) throw new Error("No post found");
+        return posts;
+    } catch (error: any) {
+        console.log(`halo get all posts error:`, error);
+        throw new Error(error.message);
     }
 }
