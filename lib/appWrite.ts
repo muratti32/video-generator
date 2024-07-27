@@ -105,3 +105,21 @@ export const getAllPosts = async () => {
         throw new Error(error.message);
     }
 }
+
+export const getLatestPosts = async () => {
+    try {
+        const posts = await databases.listDocuments(
+            databaseId,
+            videoCollectionId,
+            [
+                Query.orderDesc("$createdAt"),
+                Query.limit(7)
+            ]
+        )
+        if (!posts) throw new Error("No atest post found");
+        return posts;
+    } catch (error: any) {
+        console.log(`halo get Latest posts error:`, error);
+        throw new Error(error.message);
+    }
+}

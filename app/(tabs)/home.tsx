@@ -10,8 +10,8 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '@/constants/images';
 import { SearchInput } from '@/components/search-input';
-import { EmptyState, Trending } from '@/components';
-import { getAllPosts } from '@/lib/appWrite';
+import { EmptyState, Trending, VideoCard } from '@/components';
+import { getAllPosts, getLatestPosts } from '@/lib/appWrite';
 import useAppWrite from '@/lib/useAppWrite';
 
 type Props = {};
@@ -19,6 +19,8 @@ type Props = {};
 const Home = (props: Props) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const { data: posts, finished } = useAppWrite(getAllPosts);
+  const { data: latestPosts } = useAppWrite(getLatestPosts);
+
   const onRefresh = async () => {
     setRefreshing(true);
     setTimeout(() => {
@@ -26,17 +28,12 @@ const Home = (props: Props) => {
     }, 2000);
   };
 
-  console.log(`halo posts:`, posts.documents);
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
         data={posts.documents}
         keyExtractor={(item) => item.$id.toString()}
-        renderItem={({ item }) => (
-          <View>
-            <Text className="text-white">{item.title} </Text>
-          </View>
-        )}
+        renderItem={({ item }) => <VideoCard video={item} />}
         ListHeaderComponent={() => (
           <View className="my-6 px-4 ">
             <View className="justify-between items-start flex-row mb-6">
@@ -62,7 +59,7 @@ const Home = (props: Props) => {
               </Text>
             </View>
 
-            <Trending posts={[{ id: 1 }, { id: 2 }, { id: 3 }]} />
+            <Trending posts={latestPosts} />
           </View>
         )}
         ListEmptyComponent={() => (

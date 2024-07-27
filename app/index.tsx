@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, Image, View } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '@/constants/images';
@@ -9,7 +9,11 @@ import { useGlobalContext } from '@/context/global-provider';
 
 const Main = () => {
   const { isLoading, isLoggedIn } = useGlobalContext();
-  if (!isLoading && isLoggedIn) router.replace('/home');
+
+  useEffect(() => {
+    if (!isLoading && isLoggedIn) router.replace('/home');
+  }, [isLoading, isLoggedIn]);
+
   return (
     <SafeAreaView className=" bg-primary h-full">
       <StatusBar style="light" backgroundColor="#161622" />
