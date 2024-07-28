@@ -123,3 +123,22 @@ export const getLatestPosts = async () => {
         throw new Error(error.message);
     }
 }
+
+export const searchPosts = async (query: string | undefined) => {
+    if (!query) throw new Error("No Search Parameter")
+    console.log(`halo search query:`, query);
+    try {
+        const posts = await databases.listDocuments(
+            databaseId,
+            videoCollectionId,
+            [
+                Query.search("title", query)
+            ]
+        )
+        if (!posts) throw new Error("No search post found");
+        return posts;
+    } catch (error: any) {
+        console.log(`halo get Latest posts error:`, error);
+        throw new Error(error.message);
+    }
+}

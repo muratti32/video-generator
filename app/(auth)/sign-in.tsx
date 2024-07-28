@@ -24,7 +24,6 @@ const SignIn = (props: Props) => {
     setIsSubmitting(true);
     try {
       const result = signIn(form.email, form.password);
-      console.log(`halo result:`, result);
       setIsSubmitting(false);
       router.replace('/home');
     } catch (error: any) {

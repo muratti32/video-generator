@@ -29,7 +29,6 @@ const SignUp = (props: Props) => {
         form.password,
         form.username,
       );
-      console.log(`halo result:`, result);
       setIsSubmitting(false);
       router.replace('/home');
     } catch (error: any) {
