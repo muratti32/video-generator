@@ -1,18 +1,27 @@
 import { getCurrentUser } from '@/lib/appWrite';
+import { User } from '@/types';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-const GlobalContext = createContext({
+type GlobalContextType = {
+  isLoggedIn: boolean;
+  user: User | undefined;
+  isLoading: boolean;
+  setIsLoggedIn: (value: boolean) => void;
+  setUser: (value: User | undefined) => void;
+};
+const GlobalContext = createContext<GlobalContextType>({
   isLoggedIn: false,
-  user: null,
+  user: undefined,
   isLoading: true,
   setIsLoggedIn: (value: boolean) => {},
+  setUser: (value: User | undefined) => {},
 });
 
 export const useGlobalContext = () => useContext(GlobalContext);
 
 export const GlobalProvider = ({ children }: any) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | undefined>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,11 +30,14 @@ export const GlobalProvider = ({ children }: any) => {
         if (user) {
           setIsLoggedIn(true);
           setUser(user);
+        } else {
+          setIsLoggedIn(false);
+          setUser(undefined);
         }
         setLoading(false);
       })
       .catch((error) => {
-        console.error('error: ', error);
+        console.error('error in  ge cureent user: ', error);
         setLoading(false);
       })
       .finally(() => setLoading(false));
@@ -38,6 +50,7 @@ export const GlobalProvider = ({ children }: any) => {
         user,
         isLoading: loading,
         setIsLoggedIn,
+        setUser,
       }}
     >
       {children}

@@ -1,3 +1,4 @@
+import { User } from '@/types';
 import { Account, Avatars, Client, Databases, ID, Query } from 'react-native-appwrite';
 
 export const appWriteConfig = {
@@ -72,7 +73,7 @@ export const signIn = async (email: string, password: string) => {
     }
 }
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (): Promise<User> => {
     try {
         const currentAccount = await account.get();
         if (!currentAccount) throw new Error();
@@ -84,11 +85,10 @@ export const getCurrentUser = async () => {
             ]
         )
         if (!currentUser) throw new Error();
-        return currentUser.documents[0];
+        return currentUser.documents[0] as User;
     } catch (error: any) {
         console.log(`halo get current user error:`, error);
         throw new Error(error);
-
     }
 }
 
@@ -126,7 +126,6 @@ export const getLatestPosts = async () => {
 
 export const searchPosts = async (query: string | undefined) => {
     if (!query) throw new Error("No Search Parameter")
-    console.log(`halo search query:`, query);
     try {
         const posts = await databases.listDocuments(
             databaseId,
@@ -140,5 +139,34 @@ export const searchPosts = async (query: string | undefined) => {
     } catch (error: any) {
         console.log(`halo get Latest posts error:`, error);
         throw new Error(error.message);
+    }
+}
+
+export const getProfilePosts = async (userId: string | undefined) => {
+    if (!userId) throw new Error("No User Id")
+    try {
+        const posts = await databases.listDocuments(
+            databaseId,
+            videoCollectionId,
+            [
+                Query.equal("users", userId)
+
+            ]
+        )
+        if (!posts) throw new Error("No user profile post found");
+        return posts;
+    } catch (error: any) {
+        console.log(`halo get user profile posts error:`, error);
+        throw new Error(error.message);
+    }
+}
+
+export const signOut = () => {
+    try {
+        const session = account.deleteSession('current');
+        if (!session) throw new Error("No session found");
+        return session;
+    } catch (error: any) {
+        throw new Error(error);
     }
 }

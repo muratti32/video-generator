@@ -5,6 +5,7 @@ const useAppWrite = (fn: any) => {
   const [data, setData] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [error, setError] = useState(undefined);
 
   const fetchData = async () => {
     setLoading(true);
@@ -15,17 +16,19 @@ const useAppWrite = (fn: any) => {
         setFinished(true);
       }
     } catch (error: any) {
+      setError(error);
       Alert.alert('Error', error.message);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
-  }, [fn]);
+  }, []);
 
   const reFetch = () => fetchData();
-  return { data, loading, reFetch, finished };
+  return { data, loading, reFetch, finished, error };
 };
 
 export default useAppWrite;

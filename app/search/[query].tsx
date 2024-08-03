@@ -20,7 +20,6 @@ const Search = (props: Props) => {
 
   const { data: posts } = useAppWrite(fetcher);
 
-  console.log(`halo query screen:`, query);
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
