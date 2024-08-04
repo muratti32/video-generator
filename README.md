@@ -43,9 +43,9 @@
 
 [![Product Name Screen Shot][product-screenshot]]
 
-![](images/screen_record.gif)
-
 ClipCast is an innovative video sharing platform designed to deliver a seamless user experience. Built with Expo and powered by Appwrite, ClipCast offers a rich set of features for video upload, playback, and sharing. The application utilizes a range of modern technologies and libraries to ensure smooth operation across devices.
+
+![](images/screen_record.gif)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
