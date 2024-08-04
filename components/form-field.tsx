@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { icons } from '@/constants/icons';
 
 type Props = {
-  title: 'Email' | 'Password' | 'Username' | 'Full Name' | 'Phone Number';
+  title: string;
   value: string;
   handleChange: (value: string) => void;
   placeholder?: string;

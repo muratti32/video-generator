@@ -12,10 +12,8 @@ import { icons } from '@/constants/icons';
 type Props = {};
 
 const Profile = (props: Props) => {
-  const { query } = useLocalSearchParams();
   const { user, setIsLoggedIn, setUser } = useGlobalContext();
 
-  console.log(`halo user In profile:`, user);
   const { data: posts } = useAppWrite(() => getProfilePosts(user?.$id));
 
   const logout = async () => {

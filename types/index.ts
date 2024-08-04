@@ -27,3 +27,18 @@ export interface User {
     email: string
     username: string
 }
+
+export interface UploadFileResponse {
+    $createdAt: string
+    $id: string
+    $permissions: string[]
+    $updatedAt: string
+    bucketId: string
+    chunksTotal: number
+    chunksUploaded: number
+    mimeType: string
+    name: string
+    signature: string
+    sizeOriginal: number
+}
+

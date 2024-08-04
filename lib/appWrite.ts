@@ -1,5 +1,5 @@
-import { User } from '@/types';
-import { Account, Avatars, Client, Databases, ID, Query } from 'react-native-appwrite';
+import { UploadFileResponse, User } from '@/types';
+import { Account, Avatars, Client, Databases, ID, ImageGravity, Query, Storage } from 'react-native-appwrite';
 
 export const appWriteConfig = {
     endpoint: 'https://cloud.appwrite.io/v1',
@@ -31,6 +31,7 @@ client
 
 const account = new Account(client);
 const databases = new Databases(client);
+const storage = new Storage(client);
 
 export const createAccount = async (email: string, password: string, username: string) => {
     try {
@@ -167,6 +168,78 @@ export const signOut = () => {
         if (!session) throw new Error("No session found");
         return session;
     } catch (error: any) {
+        throw new Error(error);
+    }
+}
+
+const getFilePreviewUrl = (fileId: string, type: "video" | "image") => {
+    let fileUrl: any = "";
+    console.log(`halo type:`, type);
+    try {
+        if (type === "video") {
+            fileUrl = storage.getFileView(storageId, fileId);
+        } else if (type === "image") {
+            fileUrl = storage.getFilePreview(storageId, fileId, 2000, 2000, ImageGravity.Top, 100);
+
+        }
+    } catch (error: any) {
+        throw new Error(error);
+    }
+    if (!fileUrl) throw new Error("No file url found");
+    return fileUrl;
+}
+
+
+const uploadFile = async (file: any, type: "image" | "video") => {
+    if (!file) throw new Error("No file found");
+    try {
+        const asset = { type: file.mimeType, name: file.fileName, size: file.fileSize, uri: file.uri }
+        console.log(`halo assest:`, asset);
+        const uploadedFile: UploadFileResponse = await storage.createFile(storageId, ID.unique(), asset)
+        console.log(`halo uploadedFile:`, uploadedFile);
+        const fileUrl = getFilePreviewUrl(uploadedFile.$id, type);
+        console.log(`halo file url:`, fileUrl);
+        if (!fileUrl) throw new Error("No file uploaded");
+        return fileUrl;
+    } catch (error: any) {
+        console.log(`halo upload file error:`, error);
+        throw new Error(error);
+
+    }
+}
+
+export const createPost = async (title: string, video: any, thumbnail: any, prompt: string, userId: string) => {
+    try {
+        const [videoFile, thumbnailFile] = await Promise.all([
+            uploadFile(video, "video"),
+            uploadFile(thumbnail, "image")
+        ])
+
+        console.log(`halo data:`, {
+            title,
+            prompt,
+            video: videoFile,
+            thumbnail: thumbnailFile,
+            users: userId
+        });
+
+        const newPost = await databases.createDocument(
+            databaseId,
+            videoCollectionId,
+            ID.unique(),
+            {
+                title,
+                prompt,
+                video: videoFile,
+                thumbnail: thumbnailFile,
+                users: userId
+            }
+        )
+        console.log(`halo newPost result:`, newPost);
+        if (!newPost) throw new Error("No post created");
+        return newPost;
+    } catch (error: any) {
+        console.log(`halo create post error:`, error);
         throw new Error(error);
     }
 }
