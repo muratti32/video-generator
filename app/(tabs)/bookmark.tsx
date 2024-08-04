@@ -15,14 +15,14 @@ const Bookmark = (props: Props) => {
   const [searchParam, setSearchParam] = useState<string>('');
 
   const fetcher = useCallback(async () => {
-    const result = await searchPosts(query?.toString());
+    if (searchParam.length < 3) return;
+    const result = await searchPosts(searchParam?.toString());
     return result;
-  }, [query]);
+  }, [searchParam]);
 
   const { data: posts } = useAppWrite(fetcher);
-
   const handleSearchChange = (value: string) => {
-    console.log(`halo balue:`, value);
+    setSearchParam(value);
   };
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -30,31 +30,9 @@ const Bookmark = (props: Props) => {
         data={posts.documents}
         keyExtractor={(item) => item.$id.toString()}
         renderItem={({ item }) => <VideoCard video={item} />}
-        ListHeaderComponent={() => (
-          <View className="my-6 px-4 ">
-            <View className="justify-between items-start flex-row mb-6">
-              <View>
-                <Text className="text-3xl font-psemibold text-white">
-                  Saved Videos
-                </Text>
-              </View>
-
-              <View className="mt-1.5">
-                <Image
-                  source={images['logo-small']}
-                  className="w-9 h-10"
-                  resizeMode="contain"
-                />
-              </View>
-            </View>
-            <FormField
-              placeholder="Search your saved videos"
-              value={searchParam}
-              handleChange={handleSearchChange}
-              placeholderTextColor="#CDCDE0"
-            />
-          </View>
-        )}
+        ListHeaderComponent={
+          <RenderHeader value={searchParam} handleChange={handleSearchChange} />
+        }
         ListEmptyComponent={() => (
           <EmptyState
             buttonText="Back To Explore"
@@ -68,3 +46,36 @@ const Bookmark = (props: Props) => {
 };
 
 export default Bookmark;
+
+interface RenderHeaderProps {
+  value: string;
+  handleChange: (value: string) => void;
+}
+const RenderHeader = (props: RenderHeaderProps) => {
+  const { value, handleChange } = props;
+  return (
+    <View className="my-6 px-4 ">
+      <View className="justify-between items-start flex-row mb-6">
+        <View>
+          <Text className="text-3xl font-psemibold text-white">
+            Saved Videos
+          </Text>
+        </View>
+
+        <View className="mt-1.5">
+          <Image
+            source={images['logo-small']}
+            className="w-9 h-10"
+            resizeMode="contain"
+          />
+        </View>
+      </View>
+      <FormField
+        placeholder="Search your saved videos"
+        value={value}
+        handleChange={handleChange}
+        placeholderTextColor="#CDCDE0"
+      />
+    </View>
+  );
+};
