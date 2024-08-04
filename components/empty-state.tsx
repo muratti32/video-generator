@@ -23,7 +23,7 @@ export const EmptyState = (props: Props) => {
         <Text className="font-pmedium text-lg text-gray-100">{title} </Text>
       )}
       {subtitle && (
-        <Text className="text-gray-100 text-sm font-pregular mt-2">
+        <Text className="text-2xl font-psemibold text-white mt-3">
           {subtitle}
         </Text>
       )}

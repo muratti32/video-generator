@@ -1,9 +1,9 @@
 import { FlatList, Image, Text, View } from 'react-native';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '@/constants/images';
 import { SearchInput } from '@/components/search-input';
-import { EmptyState, VideoCard } from '@/components';
+import { EmptyState, FormField, VideoCard } from '@/components';
 import { searchPosts } from '@/lib/appWrite';
 import useAppWrite from '@/lib/useAppWrite';
 import { useLocalSearchParams } from 'expo-router';
@@ -12,6 +12,7 @@ type Props = {};
 
 const Bookmark = (props: Props) => {
   const { query } = useLocalSearchParams();
+  const [searchParam, setSearchParam] = useState<string>('');
 
   const fetcher = useCallback(async () => {
     const result = await searchPosts(query?.toString());
@@ -20,6 +21,9 @@ const Bookmark = (props: Props) => {
 
   const { data: posts } = useAppWrite(fetcher);
 
+  const handleSearchChange = (value: string) => {
+    console.log(`halo balue:`, value);
+  };
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
@@ -43,14 +47,19 @@ const Bookmark = (props: Props) => {
                 />
               </View>
             </View>
-            <SearchInput value="" initialValue={query} />
+            <FormField
+              placeholder="Search your saved videos"
+              value={searchParam}
+              handleChange={handleSearchChange}
+              placeholderTextColor="#CDCDE0"
+            />
           </View>
         )}
         ListEmptyComponent={() => (
           <EmptyState
             buttonText="Back To Explore"
-            title=""
-            subtitle="No bookmark found"
+            title="No Videos Found"
+            subtitle="No videos found for this profile"
           />
         )}
       />

@@ -50,7 +50,9 @@ export const SearchInput = (props: Props) => {
       <TextInput
         className="flex-1 text-white text-base  w-full mt-0.5 font-pregular"
         value={query}
-        placeholder={'Search for videos, channels, and more...'}
+        placeholder={
+          placeholder ? placeholder : 'Search for videos, channels, and more...'
+        }
         placeholderTextColor={'#CDCDE0'}
         onChangeText={handleChange}
         keyboardType={keyboardType}
