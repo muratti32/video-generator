@@ -43,6 +43,8 @@
 
 [![Product Name Screen Shot][product-screenshot]]
 
+![](images/screen_record.gif)
+
 ClipCast is an innovative video sharing platform designed to deliver a seamless user experience. Built with Expo and powered by Appwrite, ClipCast offers a rich set of features for video upload, playback, and sharing. The application utilizes a range of modern technologies and libraries to ensure smooth operation across devices.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -159,6 +161,7 @@ Project Link: [https://github.com/muratti32/video-generator.git](https://github.
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
+[product-video]: images/screen_record.mp4
 [Next.js]: https://img.shields.io/badge/expo-000000?style=for-the-badge&logo=expo&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/ReactNative-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
