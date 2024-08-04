@@ -33,7 +33,7 @@ const Main = () => {
           <View className="relative mt-5">
             <Text className="text-white font-bold text-center text-3xl">
               Discover Endless Possibilities{' '}
-              <Text className="text-secondary-200">Aora</Text>
+              <Text className="text-secondary-200">ClipCast</Text>
             </Text>
             <Image
               source={images.path}
@@ -42,8 +42,8 @@ const Main = () => {
             />
           </View>
           <Text className="font-pregular text-sm mt-7 text-center text-gray-100">
-            Where creativity meets technology. Aora is a platform that allows
-            you to create and share your ideas with the world.
+            Where creativity meets technology. ClipCast is a platform that
+            allows you to create and share your ideas with the world.
           </Text>
           <CustomButton
             title="Continue with Email"

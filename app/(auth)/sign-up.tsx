@@ -49,7 +49,7 @@ const SignUp = (props: Props) => {
             resizeMode="contain"
           />
           <Text className="text-white text-2xl font-psemibold mt-10 mx-auto">
-            Sign Up to Aora
+            Sign Up to ClipCast
           </Text>
           <FormField
             title="Username"

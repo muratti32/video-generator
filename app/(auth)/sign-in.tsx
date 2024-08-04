@@ -49,7 +49,7 @@ const SignIn = (props: Props) => {
             resizeMode="contain"
           />
           <Text className="text-white text-2xl font-psemibold mt-10 mx-auto">
-            Log in to Aora
+            Log in to ClipCast
           </Text>
           <FormField
             title="Email"
