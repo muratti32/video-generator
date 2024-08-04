@@ -11,7 +11,6 @@ import React, { useState } from 'react';
 import { CustomButton, FormField } from '@/components';
 import { ResizeMode, Video } from 'expo-av';
 import { icons } from '@/constants/icons';
-import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import { createPost } from '@/lib/appWrite';
 import { useGlobalContext } from '@/context/global-provider';

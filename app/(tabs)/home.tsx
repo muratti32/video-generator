@@ -1,12 +1,5 @@
-import {
-  Alert,
-  FlatList,
-  Image,
-  RefreshControl,
-  Text,
-  View,
-} from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { FlatList, Image, RefreshControl, Text, View } from 'react-native';
+import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '@/constants/images';
 import { SearchInput } from '@/components/search-input';
@@ -65,6 +58,7 @@ const Home = (props: Props) => {
         ListEmptyComponent={() => (
           <EmptyState
             title="No Video Found"
+            buttonText="Upload Video"
             subtitle="Be the first one to upload "
           />
         )}

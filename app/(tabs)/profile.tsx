@@ -69,6 +69,7 @@ const Profile = (props: Props) => {
         ListEmptyComponent={() => (
           <EmptyState
             title="No Video Found"
+            buttonText="Create Video"
             subtitle="No video found with the given query"
           />
         )}
